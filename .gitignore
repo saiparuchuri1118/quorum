@@ -1,0 +1,12 @@
+__pycache__/
+*.pyc
+.venv/
+node_modules/
+
+# Never commit credentials.
+.env
+.env.*
+!.env.example
+
+# Subprocess output from server-triggered recordings; local debugging only.
+sessions/.logs/

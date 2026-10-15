@@ -1,0 +1,93 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Quorum</title>
+<link rel="stylesheet" href="./style.css">
+<script type="importmap">
+{
+  "imports": {
+    "three": "https://unpkg.com/three@0.169.0/build/three.module.js",
+    "three/addons/": "https://unpkg.com/three@0.169.0/examples/jsm/"
+  }
+}
+</script>
+</head>
+<body>
+
+<div id="stage"></div>
+
+<!-- HUD: every glyph of text lives in the DOM, never in WebGL. -->
+<header class="hud hud-top">
+  <div class="brand">
+    <span class="mark"></span>
+    <span class="wordmark">QUORUM</span>
+  </div>
+  <div class="runmeta">
+    <span id="meta-ticker" class="ticker">—</span>
+    <span id="meta-date" class="dim">—</span>
+    <span id="meta-models" class="dim">—</span>
+  </div>
+
+  <div class="search-wrap">
+    <form id="search" class="search" autocomplete="off">
+      <input id="search-input" type="text" placeholder="Analyze a ticker (AAPL, 0700.HK, BTC-USD)…"
+             maxlength="20" spellcheck="false">
+      <button id="search-submit" type="submit">Analyze</button>
+    </form>
+    <div id="search-status" class="search-status" hidden></div>
+  </div>
+
+  <div id="live-badge" class="badge-live" hidden><i></i>LIVE</div>
+  <div id="synthetic-badge" class="badge-synthetic" hidden>
+    SYNTHETIC SESSION — fabricated data, not real analysis
+  </div>
+</header>
+
+<div id="phase" class="hud phase"></div>
+
+<aside class="hud hud-stats" id="stats">
+  <div class="stat"><label>elapsed</label><b id="stat-elapsed">0:00</b></div>
+  <div class="stat"><label>llm calls</label><b id="stat-llm">0</b></div>
+  <div class="stat"><label>tools</label><b id="stat-tools">0</b></div>
+  <div class="stat"><label>tokens in</label><b id="stat-tin">0</b></div>
+  <div class="stat"><label>tokens out</label><b id="stat-tout">0</b></div>
+</aside>
+
+<aside class="hud hud-panel" id="panel" hidden>
+  <div class="panel-head">
+    <span id="panel-title">—</span>
+    <button id="panel-close" aria-label="Close">×</button>
+  </div>
+  <div class="panel-body" id="panel-body"></div>
+</aside>
+
+<section class="hud hud-feed" id="feed" aria-live="polite"></section>
+
+<footer class="hud hud-transport">
+  <button id="btn-play" class="tbtn" aria-label="Play/pause">▶</button>
+  <button id="btn-restart" class="tbtn" aria-label="Restart">⟲</button>
+  <div class="scrub">
+    <input id="scrub" type="range" min="0" max="1000" value="0" step="1" aria-label="Timeline">
+    <div class="scrub-ticks" id="scrub-ticks"></div>
+  </div>
+  <span id="clock" class="clock">0:00</span>
+  <div class="speeds">
+    <button class="sbtn" data-speed="1">1×</button>
+    <button class="sbtn is-on" data-speed="4">4×</button>
+    <button class="sbtn" data-speed="12">12×</button>
+  </div>
+  <button id="btn-mute" class="tbtn" aria-label="Mute" aria-pressed="false">♪</button>
+</footer>
+
+<div id="verdict-card" class="hud verdict-card" hidden>
+  <div class="verdict-rating" id="verdict-rating">—</div>
+  <div class="verdict-sub" id="verdict-sub">—</div>
+</div>
+
+<div id="boot" class="boot">loading session…</div>
+
+<script type="module" src="./main.js"></script>
+</body>
+</html>
